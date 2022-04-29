@@ -29,5 +29,5 @@ class FMSetlist:
                     setlist.append((cover_artist, song_name))
                 else:
                     setlist.append((main_artist, song_name))
-                
+        print(setlist)
         return setlist
