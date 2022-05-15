@@ -8,7 +8,6 @@ app = Flask(__name__)
 def generate_setlist():
     params = request.get_json()
     artistName = params['name']
-    print(artistName)
     api_key = get_api_key.get_api_key()['spotify']
     FMSetlists = FMSetlist.FMSetlist(api_key)
     setList = FMSetlists.getSetlist(artistName=artistName)
@@ -18,11 +17,15 @@ def generate_setlist():
     return resp, 200
 
 
-@app.route('/v1/nearbyconcerts/<location>', methods=['GET'])
-def get_nearby_concerts(location):
+@app.route('/v1/nearbyconcerts', methods=['GET'])
+def get_nearby_concerts():
+    params = request.get_json()
+    location = params['location']
     api_key = get_api_key.get_api_key()['ticketmaster']
     TicketMasterObj = TicketMaster.TicketMaster(api_key)
-    return TicketMasterObj.getLocations(postalCode=location), 200
+    response = TicketMasterObj.getLocations(postalCode=location)
+    print(response)
+    return response, 200
 
 # print(generate_setlist('Dua Lipa'))
 # print(get_nearby_concerts('94704'))

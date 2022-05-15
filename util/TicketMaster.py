@@ -16,8 +16,12 @@ class TicketMaster:
         
         url_base = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=M81pNFXZAR8GC7mteoDUdALwVk8ly2sI'
         json = self.getJsonResponse(url_base, params)
-        response = []
+        response = {"events": []}
         for event in json["_embedded"]["events"]:
-            response.append(event['name'])
+            temp = {}
+            temp['name'] = event['name']
+            temp['locale'] = event['locale']
+            temp['dates'] = event['dates']
+            response['events'].append(temp)
         return response
             
